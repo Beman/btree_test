@@ -1,0 +1,39 @@
+test_btree illustrates how btree may be used to build a simple test program
+using a Fedora development environment similar to that used for hashdb.
+
+* Note that submodules btree and endian are from github.com/Beman.
+
+* Note that standard Boost is used from its standard Fedora package
+  installation pint.
+
+Please see the Makefile for compilation and linkage requirements.
+
+The Makefile simply compiles test program "string_index_set".
+Running the program creates btree files "string_index_set.dat"
+and "string_index_set.ndx" containing some entries that the test program
+inserts.
+
+Test program "string_index_set.cpp" was copied directly from
+btree/example/string_index_set.cpp.
+
+Test program string_index_set.cpp is described in section
+"Variable length strings" in the tutorial at btree/doc/tutorial.html.
+
+
+Downloading
+-----------
+
+Download the btree_test sources with git:
+
+  $ git clone --recursive https://github.com/BruceMty/btree_test.git
+
+
+Compiling
+---------
+
+  $ make
+
+Note that the Makefile is expected to be run on a Fedora system
+where a development environment, specifically g++ and Boost, are
+already installed.
+

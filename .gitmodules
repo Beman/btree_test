@@ -1,0 +1,6 @@
+[submodule "btree"]
+	path = btree
+	url = https://github.com/Beman/btree.git
+[submodule "endian"]
+	path = endian
+	url = https://github.com/Beman/endian.git

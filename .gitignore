@@ -1,0 +1,6 @@
+*.o
+*.swp
+*.swo
+string_index_set
+string_index_set.dat
+string_index_set.ndx
