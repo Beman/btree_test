@@ -14,5 +14,5 @@ buffer_manager.o:
 	g++ ../btree/src/detail/buffer_manager.cpp -c -I /usr/include/boost -I ../endian/include -I ../btree/include
 
 clean:
-	rm -rf *.o string_index_set string_index.dat string_index.ndx
+	rm -rf *.o string_index_set string_index_set.dat string_index_set.ndx
 
