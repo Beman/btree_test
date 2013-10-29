@@ -14,9 +14,9 @@ and for simple usage of btree sets.
 Running the program creates btree files "string_index_set.dat"
 and "string_index_set.ndx" containing some entries that the test program
 inserts.  Test program "string_index_set.cpp" was copied directly from
-btree/example/string_index_set.cpp.
-Test program string_index_set.cpp is described in section
-"Variable length strings" in the tutorial at btree/doc/tutorial.html.
+btree/example/string_index_set.cpp.  Test program "string_index_set.cpp"
+is described in section "Variable length strings" in the tutorial
+at btree/doc/tutorial.html.
 
 Please look at the other directories to see what they provide.
 
