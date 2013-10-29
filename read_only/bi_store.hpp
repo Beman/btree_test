@@ -1,45 +1,24 @@
-// Author:  Bruce Allen <bdallen@nps.edu>
-// Created: 2/25/2013
-//
-// The software provided here is released by the Naval Postgraduate
-// School, an agency of the U.S. Department of Navy.  The software
-// bears no warranty, either expressed or implied. NPS does not assume
-// legal liability nor responsibility for a User's use of the software
-// or the results of such use.
-//
-// Please note that within the United States, copyright protection,
-// under Section 105 of the United States Code, Title 17, is not
-// available for any work of the United States Government and/or for
-// any works created by United States Government employees. User
-// acknowledges that this software contains work which was created by
-// NPS government employees and is therefore in the public domain and
-// not subject to copyright.
-//
-// Released into the public domain on February 25, 2013 by Bruce Allen.
-
 /**
  * \file
- * Provides interfaces to a two-index btree store.
- * Interfaces include lookup and add, and not removal.
+ * Provides simple lookup and add interfaces for a two-index btree store.
  */
 
-#ifndef REPOSITORY_NAME_LOOKUP_STORE_HPP
-#define REPOSITORY_NAME_LOOKUP_STORE_HPP
+#ifndef BI_STORE_HPP
+#define BI_STORE_HPP
 #include <string>
-#include "file_mode_type.hpp"
 #include "boost/btree/btree_index_set.hpp"
+#include <cassert>
 
 template<typename BI_T>
 class bi_store_t {
   private:
 
   // btree
-//zz  typedef typename boost::btree::btree_index_set<BI_T> index_by_key_t;
-  typedef typename boost::btree::btree_index_set<BI_T, default_traits> index_by_key_t;
+  typedef typename boost::btree::btree_index_set<BI_T> index_by_key_t;
   typedef typename boost::btree::btree_index_set<BI_T, default_traits, typename BI_T::value_ordering> index_by_value_t;
 
   const std::string filename_prefix;
-  const file_mode_type_t file_mode;
+  const boost::btree::flags::bitmask file_mode;
 
   // pointers to index_by_key and index_by_value btrees
   index_by_key_t* index_by_key;
@@ -51,10 +30,9 @@ class bi_store_t {
 
   public:
   bi_store_t (const std::string p_filename_prefix,
-              file_mode_type_t p_file_mode) :
+              boost::btree::flags::bitmask p_file_mode) :
       filename_prefix(p_filename_prefix), file_mode(p_file_mode),
       index_by_key(0), index_by_value(0) {
-std::cout << "bi_store filename_prefix " << filename_prefix << "\n";
 
     // data store filenames
     std::string dat_filename  = filename_prefix + ".dat";
@@ -62,7 +40,7 @@ std::cout << "bi_store filename_prefix " << filename_prefix << "\n";
     std::string idx2_filename = filename_prefix + ".idx2";
 
     // instantiate the lookup store based on file mode
-    if (file_mode == READ_ONLY) {
+    if (file_mode == boost::btree::flags::read_only) {
 
       // READ_ONLY
       index_by_key   = new index_by_key_t(idx1_filename, dat_filename,
@@ -70,7 +48,7 @@ std::cout << "bi_store filename_prefix " << filename_prefix << "\n";
       index_by_value = new index_by_value_t(idx2_filename, idx1_filename,
                                           boost::btree::flags::read_only,
                                           -1, typename BI_T::value_ordering());
-    } else if (file_mode == RW_NEW) {
+    } else if (file_mode == boost::btree::flags::truncate) {
 
       // RW_NEW
       index_by_key   = new index_by_key_t(idx1_filename, dat_filename,
@@ -78,14 +56,8 @@ std::cout << "bi_store filename_prefix " << filename_prefix << "\n";
       index_by_value = new index_by_value_t(idx2_filename, idx1_filename,
                                           boost::btree::flags::truncate,
                                           -1, typename BI_T::value_ordering());
-    } else if (file_mode == RW_MODIFY) {
-
-      // RW_MODIFY
-      index_by_key   = new index_by_key_t(idx1_filename, dat_filename,
-                                          boost::btree::flags::read_write);
-      index_by_value = new index_by_value_t(idx2_filename, idx1_filename,
-                                          boost::btree::flags::read_write,
-                                          -1, typename BI_T::value_ordering());
+    } else {
+      assert(0);
     }
   }
 
@@ -136,7 +108,7 @@ std::cout << "bi_store filename_prefix " << filename_prefix << "\n";
   typename BI_T::key_type insert_value(const typename BI_T::value_type& value) {
 
     // btree must be writable
-    if (file_mode == READ_ONLY) {
+    if (file_mode == boost::btree::flags::read_only) {
       assert(0);
     }
 
