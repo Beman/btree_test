@@ -7,7 +7,6 @@ typedef std::pair<uint64_t, uint64_t> pair_t;
 
 int cpp_main(int, char *[]) {
 
-/*
   store_t *bi_store = new store_t("test_db", boost::btree::flags::truncate);
 
   bi_store->insert_value(pair_t(10,11));
@@ -15,7 +14,6 @@ int cpp_main(int, char *[]) {
   bi_store->insert_value(pair_t(30,31));
 
   delete bi_store;
-*/
 
   // read_only test
   store_t *bi_store_ro = new store_t("test_db", boost::btree::flags::read_only);
