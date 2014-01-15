@@ -4,7 +4,7 @@ hashdb.
 
 Submodules btree/ and endian/ are from github.com/Beman.
 
-Standard Boost is used from its standard Fedora package installation pint.
+Standard Boost is used from its standard Fedora package installation point.
 
 Various directories under btree_test/ test or demonstrate specific features.
 
