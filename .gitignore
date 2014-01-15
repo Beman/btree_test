@@ -1,3 +1,5 @@
 *.o
 *.swp
 *.swo
+btree_bug_test
+temp_file
