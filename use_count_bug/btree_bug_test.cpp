@@ -37,6 +37,8 @@ int cpp_main(int argc, char* argv[]) {
   map = new map_t(temp_file, READ_ONLY);
   delete map;
 
+  std::cout << "Almost done.\n";
+
   // done
   return 0;
 }
