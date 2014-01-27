@@ -39,10 +39,10 @@ class map_btree_t {
 
   public:
     // btree map iterator
-    typedef class map_t::const_iterator map_const_iterator;
+    typedef typename map_t::const_iterator map_const_iterator;
 
     // pair returned by emplace
-    typedef class std::pair<map_const_iterator, bool> map_const_iterator_bool_pair;
+    typedef typename std::pair<map_const_iterator, bool> map_const_iterator_bool_pair;
 
   private:
     const std::string filename;
@@ -86,7 +86,7 @@ class map_btree_t {
 
   public:
     // insert
-    std::pair<class map_t::const_iterator, bool>
+    std::pair<typename map_t::const_iterator, bool>
     emplace(const KEY_T& key, const PAY_T& pay) {
       if (file_mode == READ_ONLY) {
         throw std::runtime_error("Error: emplace called in RO mode");
@@ -106,7 +106,7 @@ class map_btree_t {
     }
 
     // change
-    std::pair<class map_t::const_iterator, bool>
+    std::pair<typename map_t::const_iterator, bool>
     change(const KEY_T& key, const PAY_T& pay) {
       if (file_mode == READ_ONLY) {
         throw std::runtime_error("Error: change called in RO mode");
@@ -116,7 +116,7 @@ class map_btree_t {
       size_t num_erased = erase(key);
       if (num_erased != 1) {
         // erase failed
-        return std::pair<class map_t::const_iterator, bool>(map->end(), false);
+        return std::pair<typename map_t::const_iterator, bool>(map->end(), false);
       } else {
         // put in new
         return map->emplace(key, pay);
