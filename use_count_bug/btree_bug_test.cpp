@@ -6,15 +6,13 @@
 #include <cstdio>
 #include <boost/detail/lightweight_main.hpp>
 
-static const char temp_file[] = "temp_file";
-
-int cpp_main(int argc, char* argv[]) {
-
+namespace
+{
   typedef map_btree_t<uint64_t, uint64_t> map_t;
 
-  // clean up from any previous run
-  remove(temp_file);
+  const char temp_file[] = "temp_file";
 
+  void create_new_map()
   {
     // create new map
     map_t map(temp_file, RW_NEW);
@@ -29,11 +27,22 @@ int cpp_main(int argc, char* argv[]) {
     // check count stayed same
     size = map.size();
   }
-
+  
+  void reopen_existing_map()
   {
     // open and reclose Read Only
     map_t map(temp_file, READ_ONLY);
   }
+
+}  // unnamed namespace
+
+int cpp_main(int argc, char* argv[]) {
+
+  // clean up from any previous run
+  remove(temp_file);
+
+  create_new_map();
+  reopen_existing_map();
 
   std::cout << "Almost done.\n";
 
